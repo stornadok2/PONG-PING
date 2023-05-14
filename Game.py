@@ -1,3 +1,5 @@
+
+
 import turtle as t
 import os
 
@@ -32,7 +34,14 @@ key_right.color('red')
 key_right.penup()
 key_right.goto(350,0)
 
-
+ball = t.Turtle()
+ball.speed(0)
+ball.shape('circle')
+ball.color('yellow')
+ball.penup()
+ball.goto(0,0)
+ball_dx = 1.5   
+ball_dy = 1.5
 
 
 
@@ -90,7 +99,51 @@ win.onkeypress(key_right_down,"Down")
 while True:
     win.update() 
 
+    ball.setx(ball.xcor() + ball_dx)
+    ball.sety(ball.ycor() + ball_dy)
+
     
+
+    if ball.ycor() > 290:   
+        ball.sety(290)
+        ball_dy = ball_dy * -1
+        
+    
+    if ball.ycor() < -290:  
+        ball.sety(-290)
+        ball_dy = ball_dy * -1
+        
+
+    if ball.xcor() > 390:   
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_a_score = player_a_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal"))
+        os.system("afplay wallhit.wav&")
+
+
+
+    if(ball.xcor()) < -390:
+        ball.goto(0,0)
+        ball_dx = ball_dx * -1
+        player_b_score = player_b_score + 1
+        pen.clear()
+        pen.write("Player A: {}                    Player B: {} ".format(player_a_score,player_b_score),align="center",font=('Monaco',24,"normal"))
+        os.system("afplay wallhit.wav&")
+
+
+    
+
+    if(ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < key_right.ycor() + 40 and ball.ycor() > key_right.ycor() - 40):
+        ball.setx(340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
+
+    if(ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < key_left.ycor() + 40 and ball.ycor() > key_left.ycor() - 40):
+        ball.setx(-340)
+        ball_dx = ball_dx * -1
+        os.system("afplay paddle.wav&")
 
 
     
